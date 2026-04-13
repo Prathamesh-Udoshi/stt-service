@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+faster-whisper
+python-multipart
+python-dotenv
+aiofiles
+pydantic-settings
+torch
+
+# .\stt-env\Scripts\Activate.bat       For CMD
+# .\stt-env\Scripts\Activate.ps1       For PowerShell
