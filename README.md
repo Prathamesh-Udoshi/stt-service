@@ -1,83 +1,67 @@
-# Speech-to-Text Microservice
+# Speech-to-Text Microservice (Soniq)
 
-A dedicated microservice built with **FastAPI** and **Faster-Whisper** to handle high-performance audio transcription.
+A dedicated, high-performance Speech-to-Text (STT) microservice built with **FastAPI** and **Faster-Whisper**. It features a modern web dashboard for easy transcription via audio uploads or live microphone recording.
 
-## Features
-- **Fast Inference**: Uses `faster-whisper` for optimized transcription.
-- **Auto GPU Detection**: Automatically uses CUDA if a compatible GPU is found.
-- **Scalable Structure**: Modularized code for easy maintenance and scaling.
-- **Resource Management**: Automatically cleans up temporary audio files after processing.
-- **CORS Enabled**: Ready to be consumed by web applications (e.g., Laravel).
+## 🚀 Key Features
+- **Modern Dashboard**: Clean, full-width web interface for managing transcriptions.
+- **Live Recording**: Capture and transcribe audio directly from your microphone.
+- **Fast Inference**: Powered by `faster-whisper` for optimized processing.
+- **Auto Hardware Detection**: Automatically detects and utilizes GPU (CUDA) for lightning-fast results.
+- **Smart Resource Cleanup**: Automatically deletes temporary audio files after processing.
+- **API Ready**: Exposes a POST endpoint for integration with other services (e.g., Laravel).
 
-## Tech Stack
-- **FastAPI**: Modern, fast web framework.
-- **Faster-Whisper**: A re-implementation of OpenAI's Whisper model using CTranslate2.
-- **Uvicorn**: Lightning-fast ASGI server.
-- **Python-Multipart**: For handling audio file uploads.
+## 🛠 Tech Stack
+- **FastAPI**: Backend web framework.
+- **Faster-Whisper**: Optimized re-implementation of OpenAI's Whisper model.
+- **Vanilla JS/CSS**: Minimalist, high-performance frontend dashboard.
+- **Pydantic Settings**: Centralized configuration management.
 
-## Setup & Installation
+## 📂 Project Structure
+- `app/main.py`: Application entry point and static file serving.
+- `app/services/stt_service.py`: Singleton model loader and transcription logic.
+- `app/api/routes.py`: Transcription API endpoints.
+- `static/index.html`: Modern dashboard frontend.
+- `temp/`: Internal temporary storage for audio processing.
 
-1. **Create a Virtual Environment**:
+## ⚙️ Setup & Installation
+
+1. **Clone the repository**:
+   ```powershell
+   git clone https://github.com/Prathamesh-Udoshi/stt-service.git
+   cd stt-service
+   ```
+
+2. **Create a Virtual Environment**:
    ```powershell
    python -m venv stt-env
    .\stt-env\Scripts\Activate.ps1
    ```
 
-2. **Install Dependencies**:
+3. **Install Dependencies**:
    ```powershell
    pip install -r requirements.txt
    ```
 
-3. **Configure Environment (Optional)**:
-   Create a `.env` file in the root directory to override default settings:
-   ```env
-   MODEL_NAME=base
-   PORT=8001
-   DEVICE=cpu
+4. **Run the Service**:
+   ```powershell
+   python -m app.main
    ```
 
-## Running the Service
+## 🖥 Usage
 
-Start the server using the module command:
-```powershell
-python -m app.main
-```
+### Web Dashboard
+Open your browser to: **`http://localhost:8001`**
+- Click **"Upload Audio File"** to transcribe existing files.
+- Click **"Record Live Mic"** to transcribe your voice in real-time.
 
-The service will be available at `http://localhost:8001`.
-
-## Documentation
-Once running, you can access the interactive Swagger UI at:
-👉 **`http://localhost:8001/docs`**
-
-## API Reference
-
-### Transcribe Audio
+### API Integration
 **Endpoint**: `POST /api/v1/transcribe/`  
-**Content-Type**: `multipart/form-data`
-
-| Parameter | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `file` | File | Yes | Audio file (mp3, wav, m4a, etc.) |
-
 **Sample Curl Command**:
 ```powershell
 curl -X POST "http://localhost:8001/api/v1/transcribe/" `
-     -H "accept: application/json" `
      -H "Content-Type: multipart/form-data" `
-     -F "file=@path/to/audio.mp3"
+     -F "file=@audio.mp3"
 ```
 
-**Response**:
-```json
-{
-  "filename": "audio.mp3",
-  "transcription": "The transcribed text goes here...",
-  "status": "success"
-}
-```
-
-## Future Enhancements
-- [ ] Batch processing support.
-- [ ] Async processing with Celery/Redis for long files.
-- [ ] Support for custom vocabularies.
-- [ ] Language detection only endpoint.
+## 📜 License
+MIT
